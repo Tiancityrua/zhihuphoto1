@@ -13,9 +13,11 @@ def parse(url):
         "Host":"www.zhihu.com",
         "authorization":"Bearer 2|1:0|10:1511594277|4:z_c0|92:Mi4xdXFhbEJnQUFBQUFBRUlMZWdLVlVEQ1lBQUFCZ0FsVk5KV2NHV3dBYUFxcUtwUzhQZldXaURxU2ZKdUJaLWVFWkdB|e74254d34e98903fcb43cf81334141b08cc76cc6eb8b1e621c1a2881f3e93d97"
     }
+    #匹配照片的正则表达式
     pattern=re.compile('https://pic[1-4]\.zhimg\.com\/[a-z0-9-/_]*?_hd\.jpe?g')
     response=requests.get(url,headers=header)
     data=response.json()
+    #内容在“data”的“content”这个节点里面
     realdata=data['data']
     for datacontent in realdata:
         pa=re.compile(pattern)
@@ -25,6 +27,7 @@ def parse(url):
             for a in finall:
                 photourl.append(a)
     return photourl
+    #进行下载图片
 def download(photourl):
     for photo in photourl:
         photoname=photo[28:38]
